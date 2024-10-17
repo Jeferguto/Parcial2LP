@@ -1,0 +1,36 @@
+###Instructivo para el programa de evaluación de expresiones en Python con ANTLR
+
+Descripción: Este programa permite evaluar expresiones que aplican funciones sobre ítems de un objeto iterable, como listas. Utiliza ANTLR para analizar la sintaxis de las expresiones, y ofrece funciones predefinidas para mapear y filtrar elementos en función de condiciones específicas.
+
+Requisitos:
+    Python 3.x instalado en tu sistema.
+    ANTLR 4.13.2 o superior.
+    Las bibliotecas necesarias de ANTLR para Python.
+
+Compilación:
+Abrir una terminal y navega hasta el directorio donde se encuentran los archivos Iterable.g4, IterableLexer.py, IterableParser.py, y IterableVisitor.py.
+Ejecutar el siguiente comando para generar los archivos de lexer y parser: 
+    
+    antlr4 -Dlanguage=Python3 -visitor Iterable.g4
+
+Ejecución: 
+Para ejecutar el programa, utiliza el siguiente comando en la terminal: 
+
+	python3 main.py "EXPRESION" 
+
+Donde EXPRESION es la expresión que deseas evaluar, utilizando las funciones disponibles.
+
+
+Ejemplos de ejecución y sus salidas:
+
+    Filtro de números pares: python3 main.py "FILTER(isEven, [1, 2, 3, 4])" Salida: Resultado: Los pares son [2, 4]
+
+    Aplicar la función cuadrado a una lista: python3 main.py "MAP(square, [1, 2, 3, 4])" Salida: Resultado: Los cuadrados son [1, 4, 9, 16]
+
+    Aplicar la función de doble: python3 main.py "MAP(double, [5, 6, 7])" Salida: Resultado: Los dobles son [10, 12, 14]
+
+    Incrementar elementos de una lista: python3 main.py "MAP(increment, [0, 10, 20])" Salida: Resultado: Los incrementos son [1, 11, 21]
+
+    Filtrar números impares: python3 main.py "FILTER(isOdd, [1, 2, 3, 4, 5])" Salida: Resultado: Los impares son [1, 3, 5]
+
+    Filtrar números mayores a un número específico (en este caso 15): python3 main.py "FILTER(greaterThanTen, [10, 15, 20, 25])" Salida: Resultado: Los números mayores a X son [20, 25]
