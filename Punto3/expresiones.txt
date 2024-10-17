@@ -1,0 +1,4 @@
+F[f(t)] = ∫ f(t) * e^(-jwt) dt
+F^-1[F(w)] = (1/2π) * ∫ F(w) * e^(jwt) dw
+t * e^(-at) * u(t) → 1 / (a + jw)²
+F(at) → (1 / |a|) * F(w / a)
