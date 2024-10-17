@@ -1,76 +1,98 @@
 import sys
 from antlr4 import *
-from ComplexLexer import ComplexLexer
-from ComplexParser import ComplexParser
-from ComplexVisitor import ComplexVisitor
+from ComplexLexer import ComplexLexer  # Importa el lexer generado
+from ComplexParser import ComplexParser  # Importa el parser generado
+from ComplexVisitor import ComplexVisitor  # Importa el visitor generado
 
-class EvaluadorComplejos(ComplexVisitor):
+# Definición de la clase que evaluará las expresiones complejas
+class ComplexEvaluator(ComplexVisitor):
+    
+    # Visita la expresión raíz y delega a la expresión compleja
     def visitExpr(self, ctx):
         return self.visit(ctx.complexExpr())
 
-    def visitSuma(self, ctx):
-        left = self.visit(ctx.complexExpr(0))
-        right = self.visit(ctx.complexExpr(1))
-        return (left[0] + right[0], left[1] + right[1])
+    # Maneja la resta de dos expresiones complejas
+    def visitRestaExpr(self, ctx):
+        leftOperand = self.visit(ctx.complexExpr(0))  # Operando izquierdo
+        rightOperand = self.visit(ctx.complexExpr(1))  # Operando derecho
+        return (leftOperand[0] - rightOperand[0], leftOperand[1] - rightOperand[1])
+        
+    
+    # Maneja la suma de dos expresiones complejas
+    def visitSumaExpr(self, ctx):
+        leftOperand = self.visit(ctx.complexExpr(0))  # Obtiene el operando izquierdo
+        rightOperand = self.visit(ctx.complexExpr(1))  # Obtiene el operando derecho
+        return (leftOperand[0] + rightOperand[0], leftOperand[1] + rightOperand[1])
 
-    def visitResta(self, ctx):
-        left = self.visit(ctx.complexExpr(0))
-        right = self.visit(ctx.complexExpr(1))
-        return (left[0] - right[0], left[1] - right[1])
-
-    def visitParentesis(self, ctx):
+    # Maneja las expresiones entre paréntesis
+    def visitParentesisExpr(self, ctx):
         return self.visit(ctx.complexExpr())
 
-    def visitRealConImaginario(self, ctx):
-        real = float(ctx.real().getText())
-        imaginary = 0.0
+    # Maneja la expresión que tiene tanto parte real como imaginaria
+    def visitRealConImaginarioExpr(self, ctx):
+        realPart = float(ctx.real().getText())  # Convierte la parte real a flotante
+        imaginaryPart = 0.0  # Inicializa la parte imaginaria en 0
         
+        # Si hay un signo y una parte imaginaria, ajusta la parte imaginaria
         if ctx.signo():
-            signo = ctx.signo().getText()
-            imaginary_str = ctx.imaginary().real().getText()
-            imaginary = float(imaginary_str)
-            if signo == '-':
-                imaginary = -imaginary
+            sign = ctx.signo().getText()  # Obtiene el signo de la parte imaginaria
+            imaginaryStr = ctx.imaginary().real().getText()  # Obtiene el valor de la parte imaginaria
+            imaginaryPart = float(imaginaryStr)
+            if sign == '-':
+                imaginaryPart = -imaginaryPart
         else:
+            # Si no hay signo, verifica si hay una parte imaginaria
             if ctx.imaginary():
-                imaginary_str = ctx.imaginary().real().getText()
-                imaginary = float(imaginary_str)
+                imaginaryStr = ctx.imaginary().real().getText()
+                imaginaryPart = float(imaginaryStr)
         
-        return (real, imaginary)
+        return (realPart, imaginaryPart)
 
-    def visitSoloImaginario(self, ctx):
-        imaginary_str = ctx.imaginary().real().getText()
-        imaginary = float(imaginary_str)
-        return (0.0, imaginary)
+    # Maneja las expresiones que solo contienen parte imaginaria
+    def visitSoloImaginarioExpr(self, ctx):
+        imaginaryStr = ctx.imaginary().real().getText()  # Obtiene la parte imaginaria
+        imaginaryPart = float(imaginaryStr)
+        return (0.0, imaginaryPart)
 
-    def visitComplejoSimple(self, ctx):
+    # Maneja la visita a un número complejo simple
+    def visitComplejoSimpleExpr(self, ctx):
         return self.visit(ctx.complejo())
 
+# Función principal para ejecutar el programa
 def main():
+    # Verifica que se haya ingresado una expresión como argumento
     if len(sys.argv) < 2:
-        print("Ejemplo de uso: python main.py \"(2 + 7i) + (3 - 4i)\"")
+        print("Ingresar una operacion con numeros complejos. Ej -> \"(2 + 7i) + (3 - 4i)\"")
         return
 
-    input_expr = sys.argv[1]
-    input_stream = InputStream(input_expr)
-    lexer = ComplexLexer(input_stream)
-    stream = CommonTokenStream(lexer)
-    parser = ComplexParser(stream)
-    tree = parser.expr()
+    inputExpr = sys.argv[1]  # Obtiene la expresión ingresada
+    inputStream = InputStream(inputExpr)  # Convierte la expresión en un stream de entrada
+    lexer = ComplexLexer(inputStream)  # Genera los tokens usando el lexer
+    tokenStream = CommonTokenStream(lexer)  # Crea el stream de tokens
+    parser = ComplexParser(tokenStream)  # Pasa el stream de tokens al parser
+    tree = parser.expr()  # Genera el árbol sintáctico
 
-    evaluator = EvaluadorComplejos()
-    result = evaluator.visit(tree)
+    evaluator = ComplexEvaluator()  # Crea una instancia del evaluador
+    result = evaluator.visit(tree)  # Visita el árbol para evaluar la expresión
 
+    # Si no se pudo evaluar, muestra un mensaje de error
     if result is None:
         print("No se pudo evaluar la expresión.")
         return
 
-    real, imag = result
-    if imag >= 0:
-        print(f"Resultado: {real} + {imag}i")
+    realPart, imaginaryPart = result  # Desempaqueta el resultado en parte real e imaginaria
+    
+    # Si ambas partes son 0, la expresión no contiene números complejos
+    if realPart == 0 and imaginaryPart == 0:
+        print("Esta expresión no contiene números complejos.")
     else:
-        print(f"Resultado: {real} - {abs(imag)}i")
+        # Muestra el resultado formateado
+        if imaginaryPart >= 0:
+            print(f"Resultado: {realPart} + {imaginaryPart}i")
+        else:
+            print(f"Resultado: {realPart} - {abs(imaginaryPart)}i")
 
+# Inicia el programa si se ejecuta como script
 if __name__ == '__main__':
     main()
 

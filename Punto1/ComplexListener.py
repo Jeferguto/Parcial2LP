@@ -17,57 +17,57 @@ class ComplexListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ComplexParser#Suma.
-    def enterSuma(self, ctx:ComplexParser.SumaContext):
+    # Enter a parse tree produced by ComplexParser#ComplejoSimpleExpr.
+    def enterComplejoSimpleExpr(self, ctx:ComplexParser.ComplejoSimpleExprContext):
         pass
 
-    # Exit a parse tree produced by ComplexParser#Suma.
-    def exitSuma(self, ctx:ComplexParser.SumaContext):
-        pass
-
-
-    # Enter a parse tree produced by ComplexParser#Parentesis.
-    def enterParentesis(self, ctx:ComplexParser.ParentesisContext):
-        pass
-
-    # Exit a parse tree produced by ComplexParser#Parentesis.
-    def exitParentesis(self, ctx:ComplexParser.ParentesisContext):
+    # Exit a parse tree produced by ComplexParser#ComplejoSimpleExpr.
+    def exitComplejoSimpleExpr(self, ctx:ComplexParser.ComplejoSimpleExprContext):
         pass
 
 
-    # Enter a parse tree produced by ComplexParser#ComplejoSimple.
-    def enterComplejoSimple(self, ctx:ComplexParser.ComplejoSimpleContext):
+    # Enter a parse tree produced by ComplexParser#ParentesisExpr.
+    def enterParentesisExpr(self, ctx:ComplexParser.ParentesisExprContext):
         pass
 
-    # Exit a parse tree produced by ComplexParser#ComplejoSimple.
-    def exitComplejoSimple(self, ctx:ComplexParser.ComplejoSimpleContext):
-        pass
-
-
-    # Enter a parse tree produced by ComplexParser#Resta.
-    def enterResta(self, ctx:ComplexParser.RestaContext):
-        pass
-
-    # Exit a parse tree produced by ComplexParser#Resta.
-    def exitResta(self, ctx:ComplexParser.RestaContext):
+    # Exit a parse tree produced by ComplexParser#ParentesisExpr.
+    def exitParentesisExpr(self, ctx:ComplexParser.ParentesisExprContext):
         pass
 
 
-    # Enter a parse tree produced by ComplexParser#RealConImaginario.
-    def enterRealConImaginario(self, ctx:ComplexParser.RealConImaginarioContext):
+    # Enter a parse tree produced by ComplexParser#SumaExpr.
+    def enterSumaExpr(self, ctx:ComplexParser.SumaExprContext):
         pass
 
-    # Exit a parse tree produced by ComplexParser#RealConImaginario.
-    def exitRealConImaginario(self, ctx:ComplexParser.RealConImaginarioContext):
+    # Exit a parse tree produced by ComplexParser#SumaExpr.
+    def exitSumaExpr(self, ctx:ComplexParser.SumaExprContext):
         pass
 
 
-    # Enter a parse tree produced by ComplexParser#SoloImaginario.
-    def enterSoloImaginario(self, ctx:ComplexParser.SoloImaginarioContext):
+    # Enter a parse tree produced by ComplexParser#RestaExpr.
+    def enterRestaExpr(self, ctx:ComplexParser.RestaExprContext):
         pass
 
-    # Exit a parse tree produced by ComplexParser#SoloImaginario.
-    def exitSoloImaginario(self, ctx:ComplexParser.SoloImaginarioContext):
+    # Exit a parse tree produced by ComplexParser#RestaExpr.
+    def exitRestaExpr(self, ctx:ComplexParser.RestaExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ComplexParser#RealConImaginarioExpr.
+    def enterRealConImaginarioExpr(self, ctx:ComplexParser.RealConImaginarioExprContext):
+        pass
+
+    # Exit a parse tree produced by ComplexParser#RealConImaginarioExpr.
+    def exitRealConImaginarioExpr(self, ctx:ComplexParser.RealConImaginarioExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ComplexParser#SoloImaginarioExpr.
+    def enterSoloImaginarioExpr(self, ctx:ComplexParser.SoloImaginarioExprContext):
+        pass
+
+    # Exit a parse tree produced by ComplexParser#SoloImaginarioExpr.
+    def exitSoloImaginarioExpr(self, ctx:ComplexParser.SoloImaginarioExprContext):
         pass
 
 

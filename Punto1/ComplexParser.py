@@ -141,7 +141,61 @@ class ComplexParser ( Parser ):
             super().copyFrom(ctx)
 
 
-    class SumaContext(ComplexExprContext):
+    class ComplejoSimpleExprContext(ComplexExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplexExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def complejo(self):
+            return self.getTypedRuleContext(ComplexParser.ComplejoContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterComplejoSimpleExpr" ):
+                listener.enterComplejoSimpleExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitComplejoSimpleExpr" ):
+                listener.exitComplejoSimpleExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitComplejoSimpleExpr" ):
+                return visitor.visitComplejoSimpleExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ParentesisExprContext(ComplexExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplexExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LPAREN(self):
+            return self.getToken(ComplexParser.LPAREN, 0)
+        def complexExpr(self):
+            return self.getTypedRuleContext(ComplexParser.ComplexExprContext,0)
+
+        def RPAREN(self):
+            return self.getToken(ComplexParser.RPAREN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterParentesisExpr" ):
+                listener.enterParentesisExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitParentesisExpr" ):
+                listener.exitParentesisExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitParentesisExpr" ):
+                return visitor.visitParentesisExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SumaExprContext(ComplexExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplexExprContext
             super().__init__(parser)
@@ -157,75 +211,21 @@ class ComplexParser ( Parser ):
             return self.getToken(ComplexParser.PLUS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSuma" ):
-                listener.enterSuma(self)
+            if hasattr( listener, "enterSumaExpr" ):
+                listener.enterSumaExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSuma" ):
-                listener.exitSuma(self)
+            if hasattr( listener, "exitSumaExpr" ):
+                listener.exitSumaExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSuma" ):
-                return visitor.visitSuma(self)
+            if hasattr( visitor, "visitSumaExpr" ):
+                return visitor.visitSumaExpr(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class ParentesisContext(ComplexExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplexExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def LPAREN(self):
-            return self.getToken(ComplexParser.LPAREN, 0)
-        def complexExpr(self):
-            return self.getTypedRuleContext(ComplexParser.ComplexExprContext,0)
-
-        def RPAREN(self):
-            return self.getToken(ComplexParser.RPAREN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterParentesis" ):
-                listener.enterParentesis(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitParentesis" ):
-                listener.exitParentesis(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitParentesis" ):
-                return visitor.visitParentesis(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ComplejoSimpleContext(ComplexExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplexExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def complejo(self):
-            return self.getTypedRuleContext(ComplexParser.ComplejoContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterComplejoSimple" ):
-                listener.enterComplejoSimple(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitComplejoSimple" ):
-                listener.exitComplejoSimple(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitComplejoSimple" ):
-                return visitor.visitComplejoSimple(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class RestaContext(ComplexExprContext):
+    class RestaExprContext(ComplexExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplexExprContext
             super().__init__(parser)
@@ -241,16 +241,16 @@ class ComplexParser ( Parser ):
             return self.getToken(ComplexParser.MINUS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterResta" ):
-                listener.enterResta(self)
+            if hasattr( listener, "enterRestaExpr" ):
+                listener.enterRestaExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitResta" ):
-                listener.exitResta(self)
+            if hasattr( listener, "exitRestaExpr" ):
+                listener.exitRestaExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitResta" ):
-                return visitor.visitResta(self)
+            if hasattr( visitor, "visitRestaExpr" ):
+                return visitor.visitRestaExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -269,7 +269,7 @@ class ComplexParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [6]:
-                localctx = ComplexParser.ParentesisContext(self, localctx)
+                localctx = ComplexParser.ParentesisExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
 
@@ -281,7 +281,7 @@ class ComplexParser ( Parser ):
                 self.match(ComplexParser.RPAREN)
                 pass
             elif token in [2, 3]:
-                localctx = ComplexParser.ComplejoSimpleContext(self, localctx)
+                localctx = ComplexParser.ComplejoSimpleExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 20
@@ -303,7 +303,7 @@ class ComplexParser ( Parser ):
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,1,self._ctx)
                     if la_ == 1:
-                        localctx = ComplexParser.SumaContext(self, ComplexParser.ComplexExprContext(self, _parentctx, _parentState))
+                        localctx = ComplexParser.SumaExprContext(self, ComplexParser.ComplexExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_complexExpr)
                         self.state = 23
                         if not self.precpred(self._ctx, 4):
@@ -316,7 +316,7 @@ class ComplexParser ( Parser ):
                         pass
 
                     elif la_ == 2:
-                        localctx = ComplexParser.RestaContext(self, ComplexParser.ComplexExprContext(self, _parentctx, _parentState))
+                        localctx = ComplexParser.RestaExprContext(self, ComplexParser.ComplexExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_complexExpr)
                         self.state = 26
                         if not self.precpred(self._ctx, 3):
@@ -359,32 +359,7 @@ class ComplexParser ( Parser ):
 
 
 
-    class SoloImaginarioContext(ComplejoContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplejoContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def imaginary(self):
-            return self.getTypedRuleContext(ComplexParser.ImaginaryContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSoloImaginario" ):
-                listener.enterSoloImaginario(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSoloImaginario" ):
-                listener.exitSoloImaginario(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSoloImaginario" ):
-                return visitor.visitSoloImaginario(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class RealConImaginarioContext(ComplejoContext):
+    class RealConImaginarioExprContext(ComplejoContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplejoContext
             super().__init__(parser)
@@ -401,16 +376,41 @@ class ComplexParser ( Parser ):
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRealConImaginario" ):
-                listener.enterRealConImaginario(self)
+            if hasattr( listener, "enterRealConImaginarioExpr" ):
+                listener.enterRealConImaginarioExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRealConImaginario" ):
-                listener.exitRealConImaginario(self)
+            if hasattr( listener, "exitRealConImaginarioExpr" ):
+                listener.exitRealConImaginarioExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRealConImaginario" ):
-                return visitor.visitRealConImaginario(self)
+            if hasattr( visitor, "visitRealConImaginarioExpr" ):
+                return visitor.visitRealConImaginarioExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SoloImaginarioExprContext(ComplejoContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ComplexParser.ComplejoContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def imaginary(self):
+            return self.getTypedRuleContext(ComplexParser.ImaginaryContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSoloImaginarioExpr" ):
+                listener.enterSoloImaginarioExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSoloImaginarioExpr" ):
+                listener.exitSoloImaginarioExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSoloImaginarioExpr" ):
+                return visitor.visitSoloImaginarioExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -425,7 +425,7 @@ class ComplexParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
-                localctx = ComplexParser.RealConImaginarioContext(self, localctx)
+                localctx = ComplexParser.RealConImaginarioExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 34
                 self.real()
@@ -442,7 +442,7 @@ class ComplexParser ( Parser ):
                 pass
 
             elif la_ == 2:
-                localctx = ComplexParser.SoloImaginarioContext(self, localctx)
+                localctx = ComplexParser.SoloImaginarioExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 40
                 self.imaginary()
