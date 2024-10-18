@@ -1,0 +1,30 @@
+###Instructivo para la Evaluación de Transformadas de Fourier
+
+Descripción:
+Este programa utiliza ANTLR4 para evaluar transformadas de Fourier a partir de expresiones matemáticas. Permite procesar varias expresiones en un archivo de texto y el resultado de la evaluación.
+
+Requisitos:
+- Python 3
+- ANTLR4
+- La biblioteca de ANTLR para Python instalada.
+
+Compilación:
+Para compilar la gramática, usa el siguiente comando en la terminal:
+antlr4 -Dlanguage=Python3 -visitor Fourier.g4
+
+Esto generará los archivos necesarios para la ejecución.
+
+Ejecución:
+Una vez compilado, ejecuta el programa con el siguiente comando:
+python3 main.py expresiones.txt
+
+Ejemplos de Salida:
+Ejemplo 1:
+Procesando línea: F[f(t)] = ∫ f(t) * exp(-j * w * t) dt
+Resultado de la evaluación: F
+
+Ejemplo 2:
+Procesando línea: F^-1[F(w)] = (1/(2 * π)) * ∫ F(w) * exp(j * w * t) dw
+Resultado de la evaluación: Transformada Inversa de Fourier de F(w)
+
+

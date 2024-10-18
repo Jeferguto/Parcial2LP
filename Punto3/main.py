@@ -1,73 +1,54 @@
 import sys
 from antlr4 import *
-from FourierLexer import FourierLexer  # Asegúrate de que el nombre del archivo sea correcto
-from FourierParser import FourierParser  # Asegúrate de que el nombre del archivo sea correcto
+from FourierLexer import FourierLexer
+from FourierParser import FourierParser
+from FourierVisitor import FourierVisitor
 
-class FourierEvaluator(ParseTreeVisitor):
+class FourierEvalVisitor(FourierVisitor):
     def visitFunc_expr(self, ctx):
+        # Lógica para manejar funciones de Fourier
         if ctx.FOURIER():
-            print("Calculando la transformada de Fourier para: ", ctx.expr().getText())
-            result = self.visit(ctx.expr())
-            return f"FOURIER({result})"  # Retorna el resultado
+            return f"Transformada de Fourier de {ctx.expr().getText()}"
         elif ctx.INVFOURIER():
-            print("Calculando la inversa de la transformada de Fourier para: ", ctx.expr().getText())
-            result = self.visit(ctx.expr())
-            return f"FOURIER^-1({result})"  # Retorna el resultado
+            return f"Transformada Inversa de Fourier de {ctx.expr().getText()}"
+        return None
 
     def visitIntegral_expr(self, ctx):
-        print("Calculando integral: ", ctx.getText())
-        return "Integral Result"
-
-    def visitAtom(self, ctx):
-        if ctx.INT():
-            return int(ctx.INT().getText())
-        elif ctx.FLOAT():
-            return float(ctx.FLOAT().getText())
-        elif ctx.ID():
-            return ctx.ID().getText()
-        return None
-
-    def visitOp(self, ctx):
-        left = self.visit(ctx.term(0))  # Obtiene el primer término
-        right = self.visit(ctx.term(1))  # Obtiene el segundo término
-
-        if ctx.PLUS():
-            return left + right
-        elif ctx.MINUS():
-            return left - right
-        elif ctx.MULT():
-            return left * right
-        elif ctx.DIV():
-            return left / right
-        elif ctx.EXP():
-            return left ** right
-        return None
+        return f"Integración de {ctx.expr().getText()} respecto a {ctx.getChild(2).getText()}"
 
     def visitTerm(self, ctx):
-        return self.visit(ctx.getChild(0))  # Visita el primer hijo de 'term'
+        return self.visitChildren(ctx)
+
+    def visitAtom(self, ctx):
+        return ctx.getText()
 
 def main(file_path):
-    # Abrir el archivo de entrada
     with open(file_path, 'r') as file:
-        for line_number, line in enumerate(file, start=1):
-            expression = line.strip()
-            print(f"\nProcesando línea {line_number}: {expression}")
-            input_stream = InputStream(expression)
-            
-            lexer = FourierLexer(input_stream)
-            stream = CommonTokenStream(lexer)
-            parser = FourierParser(stream)
-            
-            tree = parser.expr()
-            evaluator = FourierEvaluator()
-            result = evaluator.visit(tree)
+        lines = file.readlines()
+        
+    for line in lines:
+        line = line.strip()
+        if not line:  # Verificar si la línea está vacía
+            continue
+        
+        print(f"Procesando línea: {line}")
+        input_stream = InputStream(line)
+        lexer = FourierLexer(input_stream)
+        stream = CommonTokenStream(lexer)
+        parser = FourierParser(stream)
 
-            print("Resultado de la evaluación:", result)
+        tree = parser.expr()
+        evaluator = FourierEvalVisitor()
+
+        result = evaluator.visit(tree)
+        print(f"Resultado de la evaluación: {result}\n")
+
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        file_path = sys.argv[1]
-        main(file_path)
-    else:
-        print("Por favor, proporciona la ruta del archivo de entrada.")
+    if len(sys.argv) != 2:
+        print("Uso: python3 main.py <archivo_de_expresiones.txt>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+    main(file_path)
 
