@@ -1,12 +1,12 @@
 ### Instrucciones para compilar y ejecutar el programa de expresiones de números complejos
 
-
 #### Requisitos previos:
 
 - Tener instalada la versión 4.13.2 de ANTLR4.
-
 - Tener instalado Python 3.
 
+#### Aviso importante:
+El programa **no soporta operaciones con exponentes**.
 
 #### Pasos para compilar y ejecutar:
 
@@ -16,7 +16,6 @@
 
      cd ~/Descargas/Parcial2LP/Punto1
 
-
 2. **Compilar la gramática:**
 
    - Ejecutar el siguiente comando para generar los archivos necesarios a partir de la gramática:
@@ -24,7 +23,6 @@
      antlr4 -Dlanguage=Python3 -visitor Complex.g4
 
    - Esto generará los archivos `ComplexLexer.py`, `ComplexParser.py` y `ComplexVisitor.py`.
-
 
 3. **Ejecutar el programa:**
 
@@ -34,9 +32,26 @@
 
    - El programa evaluará la expresión y mostrará el resultado.
 
-
 #### Ejemplo de uso:
 
 - Para evaluar la expresión compleja `(1 + 2i) + (3 - 4i)`, debe ejecutar:
 
   python3 main.py "(1 + 2i) + (3 - 4i)"
+
+  **Salida esperada:**
+  Resultado: 4.0 - 6.0i
+
+- Para evaluar la expresión compleja `(2 + 3i) / (4 + 2i)`, debe ejecutar:
+
+  python3 main.py "(2 + 3i) / (4 + 2i)"
+
+  **Salida esperada:**
+  Resultado: 0.7 + 0.4i
+
+- Para evaluar la expresión compleja `(1 + 1i) + (2 + 2i) * (3 + 3i) - (4 - 4i)`, debe ejecutar:
+
+  python3 main.py "(1 + 1i) + (2 + 2i) * (3 + 3i) - (4 - 4i)"
+
+  **Salida esperada:**
+  Resultado: -24.0 + 18.0i
+
