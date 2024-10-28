@@ -25,7 +25,7 @@ Ejemplos de ejecución y sus salidas:
 
     Filtro de números pares: python3 main.py "FILTER(isEven, [1, 2, 3, 4])" Salida: Resultado: Los pares son [2, 4]
 
-    Aplicar la función cuadrado a una lista: python3 main.py "MAP(square, [1, 2, 3, 4])" Salida: Resultado: Los cuadrados son [1, 4, 9, 16]
+    Aplicar la función cuadrado a una lista: python3 main.py "MAP(square, [-1, 2])" Salida: Resultado: Los cuadrados son [1, 4, 9, 16]
 
     Aplicar la función de doble: python3 main.py "MAP(double, [5, 6, 7])" Salida: Resultado: Los dobles son [10, 12, 14]
 

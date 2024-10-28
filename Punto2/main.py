@@ -5,8 +5,10 @@ from IterableParser import IterableParser  # Importa el parser generado
 from IterableVisitor import IterableVisitor  # Importa el visitor generado
 
 # Definición de funciones predefinidas
+
+
 def square(x):
-    return x ** 2  # Devuelve el cuadrado de x
+    return x **1/2  # Devuelve el cuadrado de x
 
 def double(x):
     return x * 2  # Devuelve el doble de x
